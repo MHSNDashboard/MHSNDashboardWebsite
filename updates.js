@@ -39,7 +39,7 @@ function updateTime() { //Updates static page time by current time
 }
 				
 function updateBlock(AB) {
-
+  
   // if('sunday' in date.toLowerCase() || 'saturday' in date.toLowerCase()) {
   // 	document.getElementById('block').innerHTML = 'Today is a weekend, school is not in session today';
   // 	return;
@@ -52,6 +52,10 @@ function updateBlock(AB) {
   minute = dt.getMinutes();
 
   current = new Date('December 1, 2000 ' + hour + ':' + minute);
+
+  if(!AB) {
+    AB = "";
+  }
   
   const block_times = {
     '1' : {
@@ -109,45 +113,50 @@ function updateBlock(AB) {
   }
 }
 
-function parseForAd(ad) {
-  return ad[Object.keys(ad)[0]] //Ad is formatted as {id: {id: stuff}}
-                                //works but is lazy approach to solving the
-                                //problem
-}
-
-function updateAdsToAd(ad) {
-  ad = parseForAd(ad)
-  
+function updateAdsToAd(ad) { //ad is ad object with stored attributes
   document.getElementById("schoolAdHeader").innerHTML = ad.header;
   document.getElementById("schoolAdSubHeader").innerHTML = ad.subheader;
   document.getElementById("schoolAdCredits").innerHTML = ad.subright;
   document.getElementById("schoolAdOptionalSide").innerHTML = ad.subleft;
-  document.getElementById("adBox").style.backgroundSize = "cover";
+  
   document.getElementById("adBox").style.backgroundImage = `url(${ad.image_data})`;
 }
 
 async function main() {
-  var dummyID = await parsePlace();
-  var json_data = JSON.parse(document.getElementById(dummyID).textContent);
-
+  //API-ish call made to MHSNScrape, store everything in dummyHTML, then take the text and parse it to JSON
+  var dummyID = await parsePlace("dummy", "https://MHSNScrape.MatthewTujague.repl.co/");
+  var JSONData = JSON.parse(document.getElementById(dummyID).textContent);
+  
   kill(dummyID); //gets rid of dummy HTML as to keep HTML neat
   
-  //ADS
-  var ads = json_data.advertisements;
-  var ad_keys  = Object.keys(ads);
+  //Weather
+  var weatherData = JSONData.weather;
   
-  console.log(ads);
+  document.getElementById("weather").innerHTML = weatherData.forecast;
+  document.getElementById("current_temperature").innerHTML = "Currently: " + weatherData.current;
+  document.getElementById("description").innerHTML = weatherData.description;
+  document.getElementById("precipitation").innerHTML = weatherData.precipitation + " chance for rain";
+  document.getElementById("hilo").innerHTML = "High, Low Temps: " + weatherData.high_low;
 
-  var ct = 0;
+  document.getElementById("weatherImage").style.backgroundSize = 'cover';
+  document.getElementById("weatherImage").style.backgroundImage = `url(${weatherData.image})`;
+
+  //Quotes
+  document.getElementById("quoteRefresh").innerHTML = JSONData.top_box.quote;
+  
+  //ADS
+  document.getElementById("adBox").style.backgroundSize = "cover";
+  
+  var ads = JSONData.advertisements;
+  var ad_keys  = Object.keys(ads);
+
+  var ct = 1;
   var secondDelay = 10;
   //Set up cycling of ads
-  setInterval(function() {
-    console.log(ct % ad_keys.length);
-    if(ct == 0) {
-      updateAdsToAd(ads[0])
-    } else {
-      updateAdsToAd(ads[ct % ad_keys.length]);  
-    }
+
+  updateAdsToAd(ads[0]);
+  setInterval(function() { //takes (secondDelay * 1000)ms to run for the first time, so we run ads[0] out of interval
+    updateAdsToAd(ads[ct % ad_keys.length]);  
     ct++;
   }, 1000 * secondDelay);
   

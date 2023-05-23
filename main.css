@@ -1,9 +1,9 @@
 body { 
   background-image: linear-gradient(black, grey);
-  -webkit-background-size: cover;
-  -moz-background-size: cover;
-  -o-background-size: cover;
-  background-size: cover;
+  -webkit-background-size: 100%; /* 100% may have fixed the vertical scaling problem, if not, revert to cover attribute */
+  -moz-background-size: 100%;
+  -o-background-size: 100%;
+  background-size: 100%;
 }
 
 header {

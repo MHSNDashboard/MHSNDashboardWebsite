@@ -1,19 +1,20 @@
 
 async function request(url="https://MHSNScrape.MatthewTujague.repl.co/") { //Scraping from repl as I can control CORS settings :)))
   function sleep(ms) {
-      return new Promise(resolve => setTimeout(resolve, ms));
+    return new Promise(resolve => setTimeout(resolve, ms));
   }
   
   var response;
   
   var xhttp = new XMLHttpRequest();
   xhttp.onreadystatechange = function() {
-      if (this.readyState == 4 && this.status == 200) { //When document is ready...
-        response = xhttp.responseText; //set response to text
-      }
+    if (this.readyState == 4 && this.status == 200) { //When document is ready...
+      response = xhttp.responseText; //set response to text
+    }
   };
   
   xhttp.open("GET", url + (/\?/.test(url) ? "&" : "?") + new Date().getTime(), true);
+  //This allows communication with other replit, otherwise data transfer is impossible
   xhttp.setRequestHeader('Access-Control-Allow-Headers', '*');
   xhttp.send();
   
@@ -24,9 +25,8 @@ async function request(url="https://MHSNScrape.MatthewTujague.repl.co/") { //Scr
   return response;
 }
 
-async function parsePlace() {
-  const dummyID = "dummy";
-  content = await request();
+async function parsePlace(dummyID, url) {
+  content = await request(url);
   content = content.replace("<html>", "").replace("</html>", "").replace("<body>", "").replace("</body>", "");
 
   var headEnd = content.search("</head>") + 7
@@ -38,6 +38,6 @@ async function parsePlace() {
 
 function kill(parentID) {
   elem = document.getElementById(parentID);
-  elem.innerHTML = ''; //Kills all inner HTML
-  elem.remove()
+  elem.innerHTML = ''; //Kills everything inside element (may not be needed, but why not?)
+  elem.remove() //removes element itself
 }

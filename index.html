@@ -14,6 +14,7 @@
     </head>
 	<body>
     <p id="dummy" style="display: none;"></p>
+    
     <script src="scrape.js"></script>
     <script src="updates.js"></script>
     
@@ -63,7 +64,7 @@
 
 			<div class="row row-cols-1 row-cols-lg-2 align-items-stretch g-4 py-5">
 			<div class="col">
-				<div class="card card-cover h-100 overflow-hidden text-white bg-dark rounded-5 shadow-lg" style="background-image: url("TODO");">
+				<div id='weatherImage' class="card card-cover h-100 overflow-hidden text-white bg-dark rounded-5 shadow-lg">
 					
           <!-- Weather Container-->
 					<div class="d-flex flex-column h-100 p-5 pb-3 pt-3 text-white text-shadow-1">
@@ -72,11 +73,11 @@
 						<h2 class="mt-5 display-6 lh-1 fw-bold" id="weather">forecast 
 							<h3 class='mt-2' id="current_temperature"></h3>
 							
-							<h6 class="mb-0" style="color: red">
+							<h6 id="description" class="mb-0" style="color: red">
 								description
               </h6>
               
-              <h6>
+              <h6 id="precipitation">
                 precip
               </h6>
 							
@@ -89,7 +90,7 @@
 							
 							<li class="d-flex align-items-center me-3">
 								<svg class="bi me-2" width="1em" height="1em"><use xlink:href="#geo-fill"/></svg>
-								<small>High/Low:</small>
+								<small id="hilo">High/Low:</small>
 							</li>
 							
 							<li class="d-flex align-items-center">
