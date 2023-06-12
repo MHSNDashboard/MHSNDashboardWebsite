@@ -29,17 +29,17 @@
 					<h2 id='date'>
 						<!--TODO, try to put in seperate script and change inner html of the date tag, use jinja in-line codeblock tags to import today_is variable to concatanate-->
 						
-            <script>
-              now = new Date();
-              var days = new Array('Sunday','Monday','Tuesday','Wednesday', 'Thursday','Friday','Saturday');
-              var months = new Array('January','February','March','April', 'May','June','July','August','September', 'October','November','December');
-              var date = ((now.getDate()<10) ? "0" : "") + now.getDate();
-              function y2k(number){
-                return (number < 1000) ? number + 1900 : number;
-              }
-              today = days[now.getDay()] + ", " + " " + months[now.getMonth()] + " " + date + ", " + (y2k(now.getYear())) ;
-              document.write("" + today); //dangerous but doesn't infringe upon lower elements
-            </script>
+			            <script>
+			              now = new Date();
+			              var days = new Array('Sunday','Monday','Tuesday','Wednesday', 'Thursday','Friday','Saturday');
+			              var months = new Array('January','February','March','April', 'May','June','July','August','September', 'October','November','December');
+			              var date = ((now.getDate()<10) ? "0" : "") + now.getDate();
+			              function y2k(number){
+			                return (number < 1000) ? number + 1900 : number;
+			              }
+			              today = days[now.getDay()] + ", " + " " + months[now.getMonth()] + " " + date + ", " + (y2k(now.getYear())) ;
+			              document.write("" + today); //dangerous but doesn't infringe upon lower elements
+			            </script>
             
 					</h2>
           
@@ -63,46 +63,6 @@
 			</div>
 
 			<div class="row row-cols-1 row-cols-lg-2 align-items-stretch g-4 py-5">
-			<div class="col">
-				<div id='weatherImage' class="card card-cover h-100 overflow-hidden text-white bg-dark rounded-5 shadow-lg">
-					
-          <!-- Weather Container-->
-					<div class="d-flex flex-column h-100 p-5 pb-3 pt-3 text-white text-shadow-1">
-					
-          <!--mbAuto -->
-						<h2 class="mt-5 display-6 lh-1 fw-bold" id="weather">forecast 
-							<h3 class='mt-2' id="current_temperature"></h3>
-							
-							<h6 id="description" class="mb-0" style="color: red">
-								description
-              </h6>
-              
-              <h6 id="precipitation">
-                precip
-              </h6>
-							
-						</h2>  
-						
-						<ul class="d-flex list-unstyled mt-auto">
-							<li class="me-auto">
-								<img src=images/mhsn_logo.jpg alt="Bootstrap" width="32" height="32" class="rounded-circle border border-white" id='mhsn_logo'>
-							</li>
-							
-							<li class="d-flex align-items-center me-3">
-								<svg class="bi me-2" width="1em" height="1em"><use xlink:href="#geo-fill"/></svg>
-								<small id="hilo">High/Low:</small>
-							</li>
-							
-							<li class="d-flex align-items-center">
-								<svg class="bi me-2" width="1em" height="1em"><use xlink:href="#calendar3"/></svg>
-								<small id="high_low"></small>
-							</li>
-							
-						</ul>
-					</div>
-				</div>
-			</div>
-
 			<div class="col">
 				<div id="adBox" class="card card-cover h-100 overflow-hidden text-white bg-dark rounded-5 shadow-lg"> 
 					<!-- Ad Container-->
@@ -128,6 +88,37 @@
 						<li class="d-flex align-items-center">
 							<svg class="bi me-2" width="1em" height="1em"><use xlink:href="#calendar3"/></svg>
 							<small id='schoolAdOptionalSide'></small>
+						</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+
+			<div class="col">
+				<div id="eventBox" class="card card-cover h-100 overflow-hidden text-white bg-dark rounded-5 shadow-lg"> 
+					<!-- Ad Container-->
+					<div class="d-flex flex-column h-100 p-5 pb-3 pt-3 text-white text-shadow-1">
+						
+						<h2 class="mb-4 display-6 lh-1 fw-bold">
+							<center id='schoolEventHeader' class="mt-5 mb-auto display-6 lh-1 fw-bold"></center>
+							
+							<center><h4 id='schoolEventSubHeader' class="mt-1"></h4></center>
+						</h2>
+	
+						<ul class="d-flex list-unstyled mt-auto">
+							
+						<li class="me-auto">
+							<img src=images/mhsn_logo.jpg alt="Bootstrap" width="32" height="32" class="rounded-circle border border-white">
+						</li>
+							
+						<li class="d-flex align-items-center me-3">
+							<svg class="bi me-2" width="1em" height="1em"><use xlink:href="#geo-fill"/></svg>
+							<small id='schoolEventCredits'></small>
+						</li>
+							
+						<li class="d-flex align-items-center">
+							<svg class="bi me-2" width="1em" height="1em"><use xlink:href="#calendar3"/></svg>
+							<small id='schoolEventOptionalSide'></small>
 						</li>
 						</ul>
 					</div>

@@ -122,43 +122,54 @@ function updateAdsToAd(ad) { //ad is ad object with stored attributes
   document.getElementById("adBox").style.backgroundImage = `url(${ad.image_data})`;
 }
 
+function updateEventsToEvent(event) { //ad is ad object with stored attributes
+  document.getElementById("schoolEventHeader").innerHTML = event.header;
+  document.getElementById("schoolEventSubHeader").innerHTML = event.subheader;
+  document.getElementById("schoolEventCredits").innerHTML = event.subright;
+  document.getElementById("schoolEventOptionalSide").innerHTML = event.subleft;
+  
+  document.getElementById("eventBox").style.backgroundImage = `url(${event.image_data})`;
+}
+
 async function main() {
   //API-ish call made to MHSNScrape, store everything in dummyHTML, then take the text and parse it to JSON
-  var dummyID = await parsePlace("dummy", "https://MHSNScrape.MatthewTujague.repl.co/");
+  var dummyID = await parsePlace("dummy", "https://MHSNEvent.MHSNDashboard.repl.co");
   var JSONData = JSON.parse(document.getElementById(dummyID).textContent);
   
   kill(dummyID); //gets rid of dummy HTML as to keep HTML neat
-  
-  //Weather
-  var weatherData = JSONData.weather;
-  
-  document.getElementById("weather").innerHTML = weatherData.forecast;
-  document.getElementById("current_temperature").innerHTML = "Currently: " + weatherData.current;
-  document.getElementById("description").innerHTML = weatherData.description;
-  document.getElementById("precipitation").innerHTML = weatherData.precipitation + " chance for rain";
-  document.getElementById("hilo").innerHTML = "High, Low Temps: " + weatherData.high_low;
-
-  document.getElementById("weatherImage").style.backgroundSize = 'cover';
-  document.getElementById("weatherImage").style.backgroundImage = `url(${weatherData.image})`;
 
   //Quotes
   document.getElementById("quoteRefresh").innerHTML = JSONData.top_box.quote;
   
-  //ADS
-  document.getElementById("adBox").style.backgroundSize = "cover";
+  //EVENTS
+  document.getElementById("eventBox").style.backgroundSize = "cover";
   
+  //Set up cycling of events
+  var events = JSONData.events;
+  var event_keys  = Object.keys(events);
+
+  var eventCT = 1;
+  var secondDelay = 10;
+  
+  updateEventsToEvent(events[0]);
+  setInterval(function() { //takes (secondDelay * 1000)ms to run for the first time, so we run ads[0] out of interval
+    updateEventsToEvent(events[eventCT % event_keys.length]);  
+    eventCT++;
+  }, 1000 * secondDelay);
+
+	
+  //Set up cycling of ads
   var ads = JSONData.advertisements;
   var ad_keys  = Object.keys(ads);
 
-  var ct = 1;
-  var secondDelay = 10;
-  //Set up cycling of ads
-
+  var adCT = 1;
+  
   updateAdsToAd(ads[0]);
   setInterval(function() { //takes (secondDelay * 1000)ms to run for the first time, so we run ads[0] out of interval
-    updateAdsToAd(ads[ct % ad_keys.length]);  
-    ct++;
+    updateAdsToAd(ads[adCT % ad_keys.length]);  
+    adCT++;
   }, 1000 * secondDelay);
+	
   
 }
 

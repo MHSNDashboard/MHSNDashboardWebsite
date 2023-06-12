@@ -1,5 +1,5 @@
 
-async function request(url="https://MHSNScrape.MatthewTujague.repl.co/") { //Scraping from repl as I can control CORS settings :)))
+async function request(url="https://MHSNEvent.MHSNDashboard.repl.co") { //Scraping from repl as I can control CORS settings :)))
   function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
   }
