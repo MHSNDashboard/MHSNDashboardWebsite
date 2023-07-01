@@ -25,8 +25,16 @@ async function request(url="https://MHSNEvent.MHSNDashboard.repl.co") { //Scrapi
   return response;
 }
 
+function delay(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));  
+}
+
 async function parsePlace(dummyID, url) {
-  content = await request(url);
+  await request(url); //First request 'wakes up' other replit
+  
+  await delay(600); //waits .6 seconds to send the second request, gives repl time to wake up(THIS CAN BE TINKERED WITH)
+  
+  content = await request(url); //Second request actually recieves data from now awake replit
   content = content.replace("<html>", "").replace("</html>", "").replace("<body>", "").replace("</body>", "");
 
   var headEnd = content.search("</head>") + 7
@@ -34,6 +42,7 @@ async function parsePlace(dummyID, url) {
 
   document.getElementById(dummyID).innerHTML = content;
   return dummyID;
+  
 }
 
 function kill(parentID) {
